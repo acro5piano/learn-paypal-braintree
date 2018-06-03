@@ -18,6 +18,7 @@
     }, (createErr, instance) => {
       button.addEventListener('click', () => {
         instance.requestPaymentMethod((err, payload) => {
+          console.log(payload.nonce)
           // Submit payload.nonce to your server
         });
       });

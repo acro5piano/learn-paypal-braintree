@@ -1,5 +1,10 @@
 const app = require('express')()
 const braintree = require('braintree')
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
 
 const gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
