@@ -29,6 +29,13 @@ app.post('/checkout', (req, res) => {
       submitForSettlement: true
     }
   }, (err, result) => {
+    if (err) {
+      console.error(err)
+      res.send('error')
+      return
+    }
+
+    res.send('success')
   })
 })
 
