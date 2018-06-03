@@ -9,20 +9,34 @@
   <div id="dropin-container"></div>
   <button id="submit-button">Request payment method</button>
   <script>
-    const button = document.querySelector('#submit-button');
-    const TOKEN = 'eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiI2ODFiMTQzMjFjZmRhMGMyYTQ2NmQxM2E3NTM5ZWM4ZGVhMWQ1M2JkOTIwZjZlNjZlMjhkYzEwMThkMTIwNDY3fGNyZWF0ZWRfYXQ9MjAxOC0wNi0wM1QwNjo0NzowNS41MTk5MTcxNTYrMDAwMFx1MDAyNm1lcmNoYW50X2lkPTJiMndyZmNkN243NDlwZzZcdTAwMjZwdWJsaWNfa2V5PTh3ajh2Mmg4ajY2dDdmeGQiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvMmIyd3JmY2Q3bjc0OXBnNi9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbXSwiZW52aXJvbm1lbnQiOiJzYW5kYm94IiwiY2xpZW50QXBpVXJsIjoiaHR0cHM6Ly9hcGkuc2FuZGJveC5icmFpbnRyZWVnYXRld2F5LmNvbTo0NDMvbWVyY2hhbnRzLzJiMndyZmNkN243NDlwZzYvY2xpZW50X2FwaSIsImFzc2V0c1VybCI6Imh0dHBzOi8vYXNzZXRzLmJyYWludHJlZWdhdGV3YXkuY29tIiwiYXV0aFVybCI6Imh0dHBzOi8vYXV0aC52ZW5tby5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tIiwiYW5hbHl0aWNzIjp7InVybCI6Imh0dHBzOi8vY2xpZW50LWFuYWx5dGljcy5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tLzJiMndyZmNkN243NDlwZzYifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6dHJ1ZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoiS2F6dXlhIEdvc2hvIiwiY2xpZW50SWQiOm51bGwsInByaXZhY3lVcmwiOiJodHRwOi8vZXhhbXBsZS5jb20vcHAiLCJ1c2VyQWdyZWVtZW50VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3RvcyIsImJhc2VVcmwiOiJodHRwczovL2Fzc2V0cy5icmFpbnRyZWVnYXRld2F5LmNvbSIsImFzc2V0c1VybCI6Imh0dHBzOi8vY2hlY2tvdXQucGF5cGFsLmNvbSIsImRpcmVjdEJhc2VVcmwiOm51bGwsImFsbG93SHR0cCI6dHJ1ZSwiZW52aXJvbm1lbnROb05ldHdvcmsiOnRydWUsImVudmlyb25tZW50Ijoib2ZmbGluZSIsInVudmV0dGVkTWVyY2hhbnQiOmZhbHNlLCJicmFpbnRyZWVDbGllbnRJZCI6Im1hc3RlcmNsaWVudDMiLCJiaWxsaW5nQWdyZWVtZW50c0VuYWJsZWQiOnRydWUsIm1lcmNoYW50QWNjb3VudElkIjoia2F6dXlhZ29zaG8iLCJjdXJyZW5jeUlzb0NvZGUiOiJVU0QifSwibWVyY2hhbnRJZCI6IjJiMndyZmNkN243NDlwZzYiLCJ2ZW5tbyI6Im9mZiJ9'
+    (async() => {
+      const button = document.querySelector('#submit-button')
+      const { token } = await fetch('http://localhost:3000/client_token').then(res => res.json())
 
-    braintree.dropin.create({
-      authorization: TOKEN,
-      container: '#dropin-container'
-    }, (createErr, instance) => {
-      button.addEventListener('click', () => {
-        instance.requestPaymentMethod((err, payload) => {
-          console.log(payload.nonce)
-          // Submit payload.nonce to your server
-        });
-      });
-    });
+      braintree.dropin.create({
+        authorization: token,
+        container: '#dropin-container'
+      }, (createErr, instance) => {
+        button.addEventListener('click', () => {
+          instance.requestPaymentMethod(async(err, payload) => {
+            const params = {
+              payment_method_nonce: payload.nonce,
+            }
+            const headers = {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            }
+            fetch('http://localhost:3000/checkout', {
+              method: 'POST',
+              body: JSON.stringify(params),
+              // headers,
+            })
+            console.log(payload.nonce)
+          })
+        })
+      })
+    })()
+
   </script>
 </body>
 

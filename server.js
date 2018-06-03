@@ -6,6 +6,12 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
+
 const gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
   merchantId: '2b2wrfcd7n749pg6',
@@ -15,7 +21,7 @@ const gateway = braintree.connect({
 
 app.get('/client_token', (req, res) => {
   gateway.clientToken.generate({}, (err, response) => {
-    res.send(response.clientToken)
+    res.send({ token: response.clientToken })
   })
 })
 
