@@ -4,5 +4,16 @@
   "main": "index.js",
   "repository": "git@github.com:acro5piano/learn-paypal-braintree",
   "author": "gosho-kazuya <ketsume0211@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "braintree": "^2.11.0",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
 }
