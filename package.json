@@ -1,0 +1,8 @@
+{
+  "name": "learn-paypal-braintree",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:acro5piano/learn-paypal-braintree",
+  "author": "gosho-kazuya <ketsume0211@gmail.com>",
+  "license": "MIT"
+}
