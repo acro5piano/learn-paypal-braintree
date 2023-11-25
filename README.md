@@ -5,7 +5,7 @@ This repository shows how braintree SDK + express.js works.
 # Why
 
 Brain tree has official tutorial (of cource) but it contains a lot of implicit dependency. 
-For example, `app` is for express instance, but JavaScript beginners has luck of the background, so hard to implement the tutorial.
+For example, `app` is for express instance, but JavaScript beginners has lack of the background, so hard to implement the tutorial.
 
 https://developers.braintreepayments.com/start/hello-server/node
 
